@@ -8,7 +8,7 @@ import matplotlib as mpl
 
 mpl.use('TkAgg')
 seed = 2
-random.seed(seed)  #
+random.seed(seed)
 
 if __name__ == "__main__":
 
@@ -52,5 +52,5 @@ if __name__ == "__main__":
         ax.clabel(cp, inline=True, fontsize=6)
         ax.set_title('ε = ' + str(round(epsilon[i], 2)))
 
-    fig.suptitle("A quartic action at different values of ε.")
+    fig.suptitle("A quartic action at different values of ε")
     plt.show()
