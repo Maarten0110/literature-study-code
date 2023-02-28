@@ -1,21 +1,29 @@
 import numpy as np
 from numpy.linalg import det, inv
-from typing import Dict, FrozenSet, Callable
+from typing import Dict, Callable, List
 from itertools import product
+from collections import Counter
 import math
+
 
 def create_random_quartic_coupling(n: int, rng: Callable[[], float]) -> np.ndarray:
     result = np.zeros(shape=(n, n, n, n))
 
-    cache: Dict[FrozenSet[int], float] = dict()
+    cache: Dict[FrozenCounter[List[int]], float] = dict()
     indices = list(range(n))
     for (a, b, c, d) in product(indices, indices, indices, indices):
-        fset = frozenset((a, b, c, d))
-        if fset not in cache.keys():
-            cache[fset] = rng()
-        result[a, b, c, d] = cache[fset]
+        counter = FrozenCounter([a, b, c, d])
+        if counter not in cache.keys():
+            cache[counter] = rng()
+        result[a, b, c, d] = cache[counter]
 
     return result
+
+
+class FrozenCounter(Counter):
+
+    def __hash__(self):
+        return hash(tuple(sorted(self.items())))
 
 
 class QuarticProbabilityDistribution:
